@@ -5,7 +5,7 @@ var albumList = [];
 function buildAlbum(item) {
   var html = "";
   html += '<div class="album">';
-  html += ' <span class="artwork"><img src="' + item.thumbnail + '" alt=""></span>';
+  html += '<img src="' + item.thumbnail + '" alt="' + item.name + '">';
   html += '</div>';
 
   return html;

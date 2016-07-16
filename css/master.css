@@ -389,7 +389,8 @@ body {
       height: 3rem;
       margin-top: 1rem;
       padding: .7rem;
-      border: 1px solid #cdcdcd;
+      border: none;
+      border-top: 2px solid #cdcdcd;
       border-radius: 4px;
       font-size: 1rem;
       font-weight: 300;
@@ -398,11 +399,9 @@ body {
       transition: border background .3s;
       background: url("../img/icon-search-box.svg") 97% center no-repeat;
       background-size: 36px;
-      background-color: #f4f4f4;
-      box-shadow: inset 2px 2px 10px 0px rgba(0, 0, 0, 0.08); }
+      background-color: #f4f4f4; }
       .search-zone form input:focus {
-        border-color: #18aa4c;
-        background-color: #ffffff; }
+        box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.1); }
     .search-zone form button {
       flex: 0 100%;
       height: 3rem;
@@ -422,6 +421,14 @@ body {
         background-color: #18aa4c; }
       .search-zone form button:disabled {
         background-color: #cdcdcd; }
+    .search-zone form input::-webkit-input-placeholder {
+      color: rgba(102, 102, 102, 0.5); }
+    .search-zone form input::-moz-placeholder {
+      color: rgba(102, 102, 102, 0.5); }
+    .search-zone form input:-ms-input-placeholder {
+      color: rgba(102, 102, 102, 0.5); }
+    .search-zone form input:-moz-placeholder {
+      color: rgba(102, 102, 102, 0.5); }
   @media (min-width: 425px) {
     .search-zone form input {
       flex: 2 65%; }
@@ -439,23 +446,21 @@ body {
   flex-wrap: wrap;
   justify-content: center; }
   .gallery .album {
-    border-radius: 4px;
-    background: #cdcdcd;
     display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
+    align-items: center;
     width: 250px;
-    padding: 3px;
-    margin: 0 1rem 2rem 1rem; }
-    .gallery .album .artwork {
-      display: block;
-      width: 100%; }
-      .gallery .album .artwork img {
-        display: block;
-        max-width: 100%; }
+    margin: 0 1rem 2rem 1rem;
+    border-radius: 4px;
+    background: #f4f4f4;
+    border-bottom: 2px solid #cdcdcd;
+    padding: 20px; }
+    .gallery .album img {
+      max-width: 100%; }
   @media (min-width: 425px) {
     .gallery .album {
       width: 175px; } }
   @media (min-width: 768px) {
-    .gallery .album {
-      width: 200px; } }
+    .gallery {
+      margin-bottom: 2rem; }
+      .gallery .album {
+        width: 200px; } }

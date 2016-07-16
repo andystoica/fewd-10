@@ -7,24 +7,17 @@
   justify-content: center;
 
   .album {
-    border-radius: $border-radius;
-    background: $color-grey-medium;
     display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
+    align-items: center;
     width: 250px;
-    padding: 3px;
     margin: 0 1rem 2rem 1rem;
-    // border-bottom: 3px solid $color-grey;
+    border-radius: $border-radius;
+    background: $color-grey-light;
+    border-bottom: 2px solid $color-grey-medium;
+    padding: 20px;
 
-    .artwork {
-      display: block;
-      width: 100%;
-
-      img {
-        display: block;
-        max-width: 100%;
-      }
+    img {
+      max-width: 100%;
     }
   }
 
@@ -35,6 +28,7 @@
   }
 
   @media (min-width: $tablet) {
+    margin-bottom: 2rem;
     .album {
       width: 200px;
     }

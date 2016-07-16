@@ -370,6 +370,14 @@ textarea {
 body {
   font-family: "Roboto", sans-serif; }
 
+div.info {
+  width: 75%;
+  margin: 0 auto;
+  font-weight: 300;
+  color: #666;
+  line-height: 1.5;
+  text-align: center; }
+
 .search-zone {
   padding: 2rem; }
   .search-zone h1 {
@@ -453,7 +461,8 @@ body {
     border-radius: 4px;
     background: #f4f4f4;
     border-bottom: 2px solid #cdcdcd;
-    padding: 20px; }
+    padding: 20px;
+    cursor: pointer; }
     .gallery .album img {
       max-width: 100%; }
   @media (min-width: 425px) {

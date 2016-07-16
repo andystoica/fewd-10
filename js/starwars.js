@@ -1,6 +1,6 @@
 function transmissionCredits() {
 
-  var url = "http://swapi.co/api/starships/";
+  var url = "https://swapi.co/api/starships/";
 
   $.getJSON(url)
     .done(function(ships){

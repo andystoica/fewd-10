@@ -370,6 +370,18 @@ textarea {
 body {
   font-family: "Roboto", sans-serif; }
 
+footer {
+  max-width: 1000px;
+  margin: 0 auto 2rem; }
+  footer p {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    color: #cdcdcd;
+    font-weight: 100;
+    font-size: 11px;
+    letter-spacing: .05em; }
+
 .search-zone {
   padding: 2rem; }
   .search-zone h1 {

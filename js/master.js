@@ -65,8 +65,11 @@ function searchAlbums(artist, limit) {
       albumList = [];
       updateGallery();
       enableForm();
+    })
+    .always(function(){
+      transmissionCredits();
     });
-} // --end--- searchAlbums()
+} // ---end--- searchAlbums()
 
 
 
@@ -83,7 +86,7 @@ function buildAlbum(item, index) {
   html += '</div>';
 
   return html;
-} // --end--- builtAlbum()
+} // ---end--- builtAlbum()
 
 
 // Updates the page with the content of the albumList
@@ -102,7 +105,7 @@ function updateGallery() {
     event.preventDefault();
       updateLightbox(parseInt($(this).attr("data-album-id")));
   });
-} // --end--- updateGallery()
+} // ---end--- updateGallery()
 
 
 
@@ -142,7 +145,7 @@ function updateLightbox(id) {
 
   $(".lightbox").show();
   $(".info").fadeIn();
-} // --end--- updateLightbox()
+} // ---end--- updateLightbox()
 
 
 // Update previous album
@@ -228,4 +231,4 @@ $("document").ready(function(){
     }
   });
 
-}); // .ready()
+}); // ---end--- .ready()

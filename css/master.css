@@ -372,9 +372,9 @@ body {
 
 footer {
   max-width: 1000px;
-  margin: 0 auto 2rem; }
+  margin: 0 auto 2rem;
+  width: 85%; }
   footer p {
-    width: 85%;
     margin: 0 auto;
     text-align: center;
     color: #cdcdcd;
@@ -449,7 +449,7 @@ footer {
       margin-left: 1rem; } }
   @media (min-width: 768px) {
     .search-zone {
-      padding: 8rem 2rem 6rem; } }
+      padding: 7rem 2rem 3rem; } }
 
 .gallery {
   display: flex;
@@ -477,6 +477,32 @@ footer {
       margin-bottom: 2rem; }
       .gallery .album {
         width: 200px; } }
+
+.sort {
+  width: 85%;
+  margin: 0 auto 1rem;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  color: #cdcdcd;
+  border-bottom: 1px solid #f4f4f4; }
+  .sort a {
+    display: inline-block;
+    text-decoration: none;
+    color: #cdcdcd;
+    background: #f4f4f4;
+    padding: 5px 8px;
+    margin-left: 15px;
+    border-radius: 4px;
+    transition: all .5s; }
+    .sort a:hover, .sort a.active {
+      background-color: #18aa4c;
+      color: #ffffff; }
+  @media (min-width: 768px) {
+    .sort {
+      margin: 0 auto 2rem;
+      padding: 2rem 0; } }
 
 .lightbox {
   position: fixed;

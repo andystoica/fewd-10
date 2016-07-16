@@ -19,7 +19,6 @@ function enableForm() {
   $("#search-btn").prop("disabled", false);
 }
 
-
 // Fetches album details for the active list of albums
 function fetchDetails() {
   $.each(albumList, function(index, item){
@@ -58,12 +57,14 @@ function searchAlbums(artist, limit) {
         }
       });
       updateGallery();
+      resetSort();
       enableForm();
       fetchDetails();
     })
     .fail(function(){
       albumList = [];
       updateGallery();
+      resetSort();
       enableForm();
     })
     .always(function(){
@@ -92,20 +93,69 @@ function buildAlbum(item, index) {
 // Updates the page with the content of the albumList
 function updateGallery() {
   // Clear the gallery
-  $("main.gallery").empty();
-  if (albumList.length > 0) {
-    // Iterate through each result and append to gallery
-    $.each(albumList, function(index, item) {
-      var albumHTML = buildAlbum(item, index);
-      $("main.gallery").append(albumHTML);
-    });
-  }
-  // Bind click events to all album elements
-  $(".album").click(function(event){
-    event.preventDefault();
+  $("main.gallery").fadeOut(300, function(){
+    $("main.gallery").empty();
+    if (albumList.length > 0) {
+      // Iterate through each result and append to gallery
+      $.each(albumList, function(index, item) {
+        var albumHTML = buildAlbum(item, index);
+        $("main.gallery").append(albumHTML);
+      });
+      $("main.gallery").fadeIn(300);
+    }
+    // Bind click events to all album elements
+    $(".album").click(function(event){
+      event.preventDefault();
       updateLightbox(parseInt($(this).attr("data-album-id")));
+    });
   });
 } // ---end--- updateGallery()
+
+
+// Gallery sorting function
+function sortBy(cat, handler) {
+
+  function sortByPopularity(a, b) {
+    return (a.details.popularity < b.details.popularity) ? -1 :
+          ((a.details.popularity > b.details.popularity) ? 1 : 0);
+  }
+
+  function sortByDate(a, b) {
+    return (a.details.release_date < b.details.release_date) ? -1 :
+          ((a.details.release_date > b.details.release_date) ? 1 : 0);
+  }
+
+  function sortByName(a, b) {
+    return (a.details.name < b.details.name) ? -1 :
+          ((a.details.name > b.details.name) ? 1 : 0);
+  }
+
+  switch (cat) {
+    case "popularity":
+      albumList.sort(sortByPopularity);
+      break;
+    case "date":
+      albumList.sort(sortByDate);
+      break;
+    case "name":
+      albumList.sort(sortByName);
+      break;
+  }
+
+  updateGallery();
+
+  $(".sort a").removeClass("active");
+  handler.addClass("active");
+}
+
+// Resets the Sort function
+function resetSort() {
+  $(".sort a").removeClass("active");
+  if (albumList.length > 0) {
+    $(".sort").fadeIn();
+  }
+}
+
 
 
 
@@ -157,7 +207,6 @@ function updatePrev() {
   }
 }
 
-
 // Update next album
 function updateNext() {
   if (currentAlbum < albumList.length - 1) {
@@ -175,7 +224,7 @@ function updateNext() {
 
 $("document").ready(function(){
   $(".lightbox").hide();
-
+  $(".sort").hide();
 
   //////////
   // Search function
@@ -195,6 +244,21 @@ $("document").ready(function(){
   //////////
   // User interaction events
   //////////
+
+  // Bind sort buttons to sorting functions
+  $(".sort-popularity").click(function(event){
+    event.preventDefault();
+    sortBy("popularity", $(this));
+  });
+  $(".sort-date").click(function(event){
+    event.preventDefault();
+    sortBy("date", $(this));
+  });
+  $(".sort-name").click(function(event){
+    event.preventDefault();
+    sortBy("name", $(this));
+  });
+
 
   // Clicking the lightbox closes it down
   $(".lightbox").click(function(){

@@ -9,8 +9,9 @@ body {
 footer {
   max-width: $max-width;
   margin: 0 auto 2rem;
+  width: 85%;
+
   p {
-    width: 85%;
     margin: 0 auto;
     text-align: center;
     color: $color-grey-medium;

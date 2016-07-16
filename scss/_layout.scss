@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: $font-primary;
+}
+
+h1 {
+  font-weight: 100;
+  font-size: 48px;
+}

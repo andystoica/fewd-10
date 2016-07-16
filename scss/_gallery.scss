@@ -1,0 +1,44 @@
+.gallery {
+
+  display: flex;
+  max-width: $max-width;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .album {
+    border-radius: $border-radius;
+    background: $color-grey-medium;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 250px;
+    padding: 3px;
+    margin: 0 1rem 2rem 1rem;
+    // border-bottom: 3px solid $color-grey;
+
+    .artwork {
+      display: block;
+      width: 100%;
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+    }
+  }
+
+  @media (min-width: $mobile-l) {
+    .album {
+      width: 175px;
+    }
+  }
+
+  @media (min-width: $tablet) {
+    .album {
+      width: 200px;
+    }
+  }
+
+
+}

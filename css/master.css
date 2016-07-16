@@ -370,14 +370,6 @@ textarea {
 body {
   font-family: "Roboto", sans-serif; }
 
-div.info {
-  width: 75%;
-  margin: 0 auto;
-  font-weight: 300;
-  color: #666;
-  line-height: 1.5;
-  text-align: center; }
-
 .search-zone {
   padding: 2rem; }
   .search-zone h1 {
@@ -473,3 +465,84 @@ div.info {
       margin-bottom: 2rem; }
       .gallery .album {
         width: 200px; } }
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+  color: #f4f4f4;
+  font-weight: 100;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+.prev {
+  background: url("../img/icon-prev-arrow.svg") center center no-repeat; }
+
+.next {
+  background: url("../img/icon-next-arrow.svg") center center no-repeat; }
+
+.prev,
+.next {
+  flex: 1 12%;
+  display: block;
+  height: 64px;
+  background-size: 32px; }
+
+.info {
+  width: 75%;
+  max-width: 900px;
+  flex: 0 75%;
+  padding: 2rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center; }
+  .info .album-info img {
+    max-width: 90%;
+    margin-bottom: 2rem; }
+  .info .album-info .album-info-artist,
+  .info .album-info .album-info-name {
+    display: block;
+    font-weight: 100;
+    font-size: 2rem;
+    line-height: 1.5;
+    margin: 0; }
+  .info .album-info .album-info-artist {
+    font-weight: 300; }
+  .info .album-info .album-info-name {
+    font-size: 1.5rem; }
+  .info .album-info ul {
+    list-style: none;
+    margin-top: 1rem;
+    padding: 0; }
+    .info .album-info ul li {
+      font-weight: 100;
+      line-height: 1.5; }
+  .info .track-info {
+    display: none;
+    padding: 0 0 0 1rem; }
+    .info .track-info table {
+      border-collapse: collapse;
+      width: 100%; }
+      .info .track-info table tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .info .track-info table tr td {
+          padding: 10px;
+          font-size: 14px;
+          line-height: 1.5; }
+  @media (min-width: 768px) {
+    .info {
+      text-align: left;
+      padding: 2rem; }
+      .info .album-info {
+        max-width: none;
+        flex: 1 45%; }
+      .info .track-info {
+        flex: 1 50%;
+        display: block; } }

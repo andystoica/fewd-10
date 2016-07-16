@@ -1,48 +1,13 @@
 // Global variable for keeping the list of active albums
+var albumSearchLimit = 8;
 var albumList = [];
+var currentAlbum;
 
-// Build a gallery album item
-function buildAlbum(item, index) {
-  var html = "";
-  html += '<div class="album" data-album-id="' + index + '">';
-  html += '<img src="' + item.thumbnail + '" alt="' + item.name + '">';
-  html += '</div>';
+//////////
+// Search functionality and AJAX calls
+//////////
 
-  return html;
-}
-
-// Update detail box
-function updateDetails(id) {
-  var info = albumList[id].details;
-  var date = new Date(info.release_date);
-
-  html  = info.artists[0].name + "<br>";
-  html  += info.name + "<br>";
-  html  += date.getFullYear() + "<br>";
-  html  += info.tracks.total + " track(s)<br>";
-  $(".info").html(html);
-}
-
-
-// Updates the page with the content of the albumList
-function updateAlbums() {
-  // Clear the gallery
-  $("main.gallery").empty();
-  if (albumList.length > 0) {
-    // Iterate through each result and append to gallery
-    $.each(albumList, function(index, item) {
-      var albumHTML = buildAlbum(item, index);
-      $("main.gallery").append(albumHTML);
-    });
-  }
-  // Bind click events to all album elements
-  $(".album").click(function(event){
-    event.preventDefault();
-      updateDetails($(this).attr("data-album-id"));
-  });
-}
-
-// Temporarely disables the search form while the Ajax call is made
+// Disables the search form while the Ajax call is made
 function disableForm() {
   $("#search-box").val("Searching ...");
   $("#search-btn").prop("disabled", true);
@@ -65,6 +30,7 @@ function fetchDetails() {
       });
   });
 }
+
 
 // Searches for an artist and replaces the albumList with the top limit albums
 function searchAlbums(artist, limit) {
@@ -91,19 +57,126 @@ function searchAlbums(artist, limit) {
           albumList.push(album);
         }
       });
-      updateAlbums();
+      updateGallery();
       enableForm();
       fetchDetails();
     })
     .fail(function(){
       albumList = [];
-      updateAlbums();
+      updateGallery();
       enableForm();
     });
+} // --end--- searchAlbums()
+
+
+
+
+//////////
+// Gallery functionality
+//////////
+
+// Build a gallery album item
+function buildAlbum(item, index) {
+  var html = "";
+  html += '<div class="album" data-album-id="' + index + '">';
+  html += '<img src="' + item.thumbnail + '" alt="' + item.name + '">';
+  html += '</div>';
+
+  return html;
+} // --end--- builtAlbum()
+
+
+// Updates the page with the content of the albumList
+function updateGallery() {
+  // Clear the gallery
+  $("main.gallery").empty();
+  if (albumList.length > 0) {
+    // Iterate through each result and append to gallery
+    $.each(albumList, function(index, item) {
+      var albumHTML = buildAlbum(item, index);
+      $("main.gallery").append(albumHTML);
+    });
+  }
+  // Bind click events to all album elements
+  $(".album").click(function(event){
+    event.preventDefault();
+      updateLightbox(parseInt($(this).attr("data-album-id")));
+  });
+} // --end--- updateGallery()
+
+
+
+
+//////////
+// Lighbox behaviour
+//////////
+
+// Update detail box
+function updateLightbox(id) {
+  currentAlbum = id;
+  var info = albumList[id].details;
+  var date = new Date(info.release_date);
+
+  function trackHTML(track) {
+    var output;
+    output  = '<tr><td>';
+    output += track.track_number + '. ' + track.name;
+    output += '</td></tr>';
+    return output;
+  }
+
+  var tracksHTML = "<table>";
+  for (var i = 0; i < info.tracks.items.length && i < 12; i++) {
+    tracksHTML += trackHTML(info.tracks.items[i]);
+  }
+  tracksHTML += "</table>";
+
+  $(".info").fadeOut(1);
+
+    $(".album-info-image").attr("src", info.images[0].url);
+    $(".album-info-artist").text(info.artists[0].name);
+    $(".album-info-name").text(info.name);
+    $(".album-info-released").text("Released: " + date.getFullYear());
+    $(".album-info-tracks").text("Tracks: " + info.tracks.total);
+    $(".track-info").html(tracksHTML);
+
+  $(".lightbox").show();
+  $(".info").fadeIn();
+} // --end--- updateLightbox()
+
+
+// Update previous album
+function updatePrev() {
+  if (currentAlbum > 0) {
+    updateLightbox(currentAlbum - 1);
+  } else {
+    updateLightbox(albumList.length - 1);
+  }
 }
 
 
+// Update next album
+function updateNext() {
+  if (currentAlbum < albumList.length - 1) {
+    updateLightbox(currentAlbum + 1);
+  } else {
+    updateLightbox(0);
+  }
+}
+
+
+
+//////////
+// Document ready
+//////////
+
 $("document").ready(function(){
+  $(".lightbox").hide();
+
+
+  //////////
+  // Search function
+  //////////
 
   // Form submit event handling
   $("#search-form").submit(function(event){
@@ -112,7 +185,47 @@ $("document").ready(function(){
     // Captures the artist name, disables the form and runs the search
     var artist = $("#search-box").val();
     disableForm();
-    searchAlbums(artist, 4);
+    searchAlbums(artist, albumSearchLimit);
+  });
+
+
+  //////////
+  // User interaction events
+  //////////
+
+  // Clicking the lightbox closes it down
+  $(".lightbox").click(function(){
+    $(this).fadeOut();
+    $(".info").fadeOut(1);
+  });
+
+
+  // Bing Prev and Next click events
+  $(".prev").click(function(event){
+    event.stopPropagation();
+    updatePrev();
+  });
+  $(".next").click(function(event){
+    event.stopPropagation();
+    updateNext();
+  });
+
+
+  // Bind escape, left and right arrow keys for navigation
+  $(document).keydown(function(event){
+    if ($(".lightbox").is(":visible") && event.which === 37)
+    {
+      updatePrev();
+    }
+    else if ($(".lightbox").is(":visible") && event.which === 39)
+    {
+      updateNext();
+    }
+    else if ($(".lightbox").is(":visible") && event.which === 27)
+    {
+      $(".lightbox").fadeOut();
+      $(".info").fadeOut(1);
+    }
   });
 
 }); // .ready()
